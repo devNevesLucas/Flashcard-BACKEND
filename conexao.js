@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path')
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
 let configuracoes;
 
@@ -17,11 +17,11 @@ function carregarDadosConexao() {
 
 }
 
-function iniciarConexao() {
+async function iniciarConexao() {
 
     let dados = carregarDadosConexao();
 
-    let conexao = mysql.createConnection({
+    let conexao = await mysql.createConnection({
         host: dados.Server,
         port: dados.Port,
         user: dados.Uid,
