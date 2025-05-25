@@ -21,7 +21,7 @@ CREATE TABLE Usuario (
 CREATE TABLE Usuario_Log (
 	codigo_usuario INT NOT NULL,
 	contagem_dias_log INT NOT NULL,
-	ultimo_login INT NOT NULL,
+	ultimo_login DATE NOT NULL,
 	FOREIGN KEY (codigo_usuario) REFERENCES Usuario (codigo_usuario)
 );
 

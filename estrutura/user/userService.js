@@ -23,6 +23,33 @@ async function obterUsuario(idUser)  {
     return await rows;
 }
 
+async function verificarLogin(dadosUser) {
+
+    const conexao = await conexaoBanco.iniciarConexao();
+
+    const query = `
+        SELECT 
+            Us.codigo_usuario, 
+            nome_usuario,
+            email_usuario,
+            permissoes_usuario,
+            pontuacao_usuario,
+            nivel_usuario,
+            UsLo.contagem_dias_log,
+            UsLo.ultimo_login
+        FROM Usuario AS Us
+        INNER JOIN Usuario_Log AS UsLo
+            ON Us.codigo_usuario =  UsLo.codigo_usuario
+        WHERE email_usuario = ?
+        AND senha_usuario = ?
+    `
+
+    const [rows, fields] = await conexao.execute(query, [dadosUser.email, dadosUser.senha]);
+
+    conexao.end();
+
+    return await rows;
+}
 
 async function inserirUsuario(dadosUsuario) {
 
@@ -64,6 +91,7 @@ async function inserirUsuario(dadosUsuario) {
 
 module.exports = {
     obterUsuario,
-    inserirUsuario
+    inserirUsuario,
+    verificarLogin
 }
 

@@ -15,11 +15,24 @@ router.get("/obterUser/:id", async (req, res, next) => {
     }
 })
 
+router.post("/verificarLogin", async (req, res, next) => {
+
+    try {
+
+        return res.json ( await userService.verificarLogin(req.body) );
+
+    } catch (error) {
+
+        console.error(`Erro ao verificar login: ${error}`);
+
+    }
+})
+
 router.post("/inserir", async (req, res, next) => {
 
     try {
         
-        return res.json (await userService.inserirUsuario(req.body) );
+        return res.json ( await userService.inserirUsuario(req.body) );
 
     } catch (error) {
 
