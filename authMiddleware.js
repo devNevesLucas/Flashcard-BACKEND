@@ -16,7 +16,7 @@ function obterSecret() {
     return secret;
 }
 
-function verificarJWT(req, res, next) {
+async function verificarJWT(req, res, next) {
 
     const header = req.headers.authorization;
 
@@ -26,13 +26,17 @@ function verificarJWT(req, res, next) {
     const token = header.split(' ')[1];
 
     try {
+
         const decoded = jwt.verify(token, obterSecret());
 
         req.user = decoded;
 
         next();
+    
     } catch (error) {
 
+        console.error("Erro no middleWare: ", error);
+        
         if (error.name == "TokenExpiredError")
             return res.status(401).send({ message: 'Token inválido ou expirado' });
     }

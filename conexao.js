@@ -32,6 +32,25 @@ async function iniciarConexao() {
     return conexao;
 }
 
+async function iniciarPool() {
+    
+    let dados = carregarDadosConexao();
+
+    let pool = await mysql.createPool({
+        host: dados.Server,
+        port: dados.Port,
+        user: dados.Uid,
+        password: dados.PwD,
+        database: dados.Database,
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0
+    })
+
+    return pool;
+}
+
 module.exports = {
-    iniciarConexao
+    iniciarConexao,
+    iniciarPool
 }
