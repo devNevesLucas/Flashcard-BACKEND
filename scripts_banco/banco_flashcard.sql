@@ -42,6 +42,7 @@ CREATE TABLE Grupo (
 CREATE TABLE Deck (
 	codigo_deck INT NOT NULL AUTO_INCREMENT,
 	nome_deck VARCHAR(200) NOT NULL,
+	cor_deck VARCHAR(8) NOT NULL,
 	data_criacao_deck DATETIME NOT NULL,
 	PRIMARY KEY (codigo_deck)
 );
@@ -53,6 +54,15 @@ CREATE TABLE Usuario_Deck (
 	PRIMARY KEY (codigo_usuario_deck),	
 	FOREIGN KEY (codigo_usuario) REFERENCES Usuario (codigo_usuario),
 	FOREIGN KEY (codigo_deck) REFERENCES Deck (codigo_deck)
+);
+
+CREATE TABLE Usuario_Deck_Log (
+	codigo_usuario_deck_log INT NOT NULL AUTO_INCREMENT,
+	codigo_usuario_deck INT NOT NULL,
+	data_conclusao DATETIME,
+	qtd_acertos INT NOT NULL,
+	PRIMARY KEY (codigo_usuario_deck_log),
+	FOREIGN KEY (codigo_usuario_deck) REFERENCES Usuario_Deck (codigo_usuario_deck)
 );
 
 CREATE TABLE Grupo_Deck (
