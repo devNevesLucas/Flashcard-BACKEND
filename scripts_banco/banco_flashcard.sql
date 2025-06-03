@@ -52,8 +52,8 @@ CREATE TABLE Usuario_Deck (
 	codigo_usuario INT NOT NULL,
 	codigo_deck INT NOT NULL,
 	PRIMARY KEY (codigo_usuario_deck),	
-	FOREIGN KEY (codigo_usuario) REFERENCES Usuario (codigo_usuario),
-	FOREIGN KEY (codigo_deck) REFERENCES Deck (codigo_deck)
+	FOREIGN KEY (codigo_usuario) REFERENCES Usuario (codigo_usuario) ON DELETE CASCADE,
+	FOREIGN KEY (codigo_deck) REFERENCES Deck (codigo_deck) ON DELETE CASCADE
 );
 
 CREATE TABLE Usuario_Deck_Log (
@@ -62,7 +62,7 @@ CREATE TABLE Usuario_Deck_Log (
 	data_conclusao DATETIME,
 	qtd_acertos INT NOT NULL,
 	PRIMARY KEY (codigo_usuario_deck_log),
-	FOREIGN KEY (codigo_usuario_deck) REFERENCES Usuario_Deck (codigo_usuario_deck)
+	FOREIGN KEY (codigo_usuario_deck) REFERENCES Usuario_Deck (codigo_usuario_deck) ON DELETE CASCADE
 );
 
 CREATE TABLE Grupo_Deck (
@@ -104,24 +104,16 @@ CREATE TABLE Pergunta_Deck (
 	codigo_pergunta INT NOT NULL,
 	codigo_deck INT NOT NULL,
 	PRIMARY KEY (codigo_pergunta_deck),
-	FOREIGN KEY (codigo_pergunta) REFERENCES Pergunta (codigo_pergunta),
-	FOREIGN KEY (codigo_deck) REFERENCES Deck (codigo_deck)
+	FOREIGN KEY (codigo_pergunta) REFERENCES Pergunta (codigo_pergunta) ON DELETE CASCADE,
+	FOREIGN KEY (codigo_deck) REFERENCES Deck (codigo_deck) ON DELETE CASCADE
 );
 
 CREATE TABLE Alternativa (
 	codigo_alternativa INT NOT NULL AUTO_INCREMENT,
 	enunciado_alternativa VARCHAR(200) NOT NULL,
 	is_correta_alternativa BIT NOT NULL,
-	PRIMARY KEY (codigo_alternativa)
-);
-
-CREATE TABLE Pergunta_Alternativa (
-	codigo_pergunta_alternativa INT NOT NULL AUTO_INCREMENT,
 	codigo_pergunta INT NOT NULL,
-	codigo_alternativa INT NOT NULL,
-	PRIMARY KEY (codigo_pergunta_alternativa),
-	FOREIGN KEY (codigo_pergunta) REFERENCES Pergunta (codigo_pergunta),
-	FOREIGN KEY (codigo_alternativa) REFERENCES Alternativa (codigo_alternativa)
+	PRIMARY KEY (codigo_alternativa),
+	FOREIGN KEY (codigo_pergunta) REFERENCES Pergunta (codigo_pergunta) ON DELETE CASCADE
 );
-
 
