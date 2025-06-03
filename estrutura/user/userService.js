@@ -126,13 +126,14 @@ async function inserirUsuario(dadosUsuario) {
         usuario: {
             nome_usuario: dadosUsuario.nome,
             pontuacao_usuario: 0,
+            codigo_usuario: resultado[0].insertId,
             nivel_usuario: 1,
             contagem_dias_log: 0,
             ultimo_login: new Date(dataAtual.getFullYear, dataAtual.getMonth, dataAtual.getDay)
         },
         token: authMidleware.gerarJWT({
             email_usuario: dadosUsuario.email,
-            codigo_usuario: resultado[0].insertedId,
+            codigo_usuario: resultado[0].insertId,
             permissoes_usuario: 0
         })
     };
