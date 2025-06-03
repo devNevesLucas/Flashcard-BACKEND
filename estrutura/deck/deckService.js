@@ -150,8 +150,22 @@ async function obterDecks(user) {
     return resultadoTratado;
 }
 
+async function removerDeck(codigoDeck) {
+
+    const query = "DELETE FROM Deck WHERE codigo_deck = ?";
+
+    const conexao = await conexaoBanco.iniciarConexao();
+
+    const [resultadoRemocao, fields] = await conexao.execute(query, [codigoDeck]);
+
+    await conexao.end();
+
+    return true;
+}
+
 module.exports = {
     inserirDeck,
     obterDeck,
-    obterDecks
+    obterDecks,
+    removerDeck
 }

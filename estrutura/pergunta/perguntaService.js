@@ -174,9 +174,44 @@ async function listarPerguntas(codigoDeck) {
     return retornoOrdenado;
 }
 
+async function listarPerguntasQuestionario(codigoDeck, quantidadeCards) {
+
+    const query = `
+        WITH CodigosPerguntas AS (
+            SELECT codigo_pergunta
+            FROM Pergunta_Deck
+            WHERE codigo_deck = ?
+            ORDER BY RAND()
+            LIMIT ?
+        )
+        SELECT 
+            Pe.codigo_pergunta,
+            Pe.enunciado_pergunta,
+            Al.codigo_alternativa,
+            Al.enunciado_alternativa,
+            Al.is_correta_alternativa
+        FROM Pergunta AS Pe
+        INNER JOIN Alternativa AS Al
+            ON Pe.codigo_pergunta = Al.codigo_pergunta
+        INNER JOIN CodigosPerguntas AS CoDe
+            ON Pe.codigo_pergunta = CoDe.codigo_pergunta
+    `;
+
+    const conexao = await conexaoBanco.iniciarConexao();
+
+    const [linhas, fields] = await conexao.execute(query, [codigoDeck, quantidadeCards]);
+
+    await conexao.end();
+
+    const retornoOrdenado = ordenarCards(linhas);
+
+    return retornoOrdenado;
+}
+
 module.exports = {
     atualizarPerguntas,
     excluirPerguntas,
     inserirPerguntas,
-    listarPerguntas
+    listarPerguntas,
+    listarPerguntasQuestionario
 }
