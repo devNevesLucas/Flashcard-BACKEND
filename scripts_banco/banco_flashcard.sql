@@ -10,7 +10,7 @@ CREATE TABLE Permissao (
 CREATE TABLE Usuario (
 	codigo_usuario INT NOT NULL AUTO_INCREMENT,
 	nome_usuario VARCHAR(200) NOT NULL,
-	email_usuario VARCHAR(200) NOT NULL,
+	email_usuario VARCHAR(200) UNIQUE NOT NULL,
 	senha_usuario VARCHAR(200) NOT NULL,
 	permissoes_usuario INT NOT NULL,
 	pontuacao_usuario INT NOT NULL,
